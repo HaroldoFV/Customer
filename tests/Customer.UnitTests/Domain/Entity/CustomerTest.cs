@@ -100,7 +100,7 @@ public class CustomerTest
             new DateTime(1990, 1, 1),
             EGenderType.Male);
 
-        customer.Update("Jane Doe");
+        customer.Update("Jane Doe", new DateTime(1990, 1, 1), EGenderType.Female);
 
         customer.Name.Should().Be("Jane Doe");
     }
@@ -117,7 +117,7 @@ public class CustomerTest
             new DateTime(1990, 1, 1),
             EGenderType.Male);
 
-        Action action = () => customer.Update(name!);
+        Action action = () => customer.Update(name!, new DateTime(1990, 1, 1), EGenderType.Male);
 
         action.Should()
             .Throw<EntityValidationException>()
@@ -150,12 +150,32 @@ public class CustomerTest
             new DateTime(1990, 1, 1),
             EGenderType.Male);
 
-        var address = new Address("Street", "123", "complement", "neighborhood", "City", "State", "01153-000");
-        customer.AddAddress(address);
+        var address1 = new Address("Main Street", "123", "Apt 1", "Downtown", "City", "State", "01153-000");
+        var address2 = new Address("Second Street", "456", "Apt 2", "Suburb", "City", "State", "02000-000");
 
-        customer.RemoveAddress(address);
+        // generate private Ids for the addresses
+        SetAddressId(address1, 1);
+        SetAddressId(address2, 2);
 
-        customer.Addresses.Should().BeEmpty();
+        customer.AddAddress(address1);
+        customer.AddAddress(address2);
+
+        var idsToRemove = new List<int> { address1.Id };
+        customer.RemoveAddress(idsToRemove);
+
+        customer.Addresses.Should().NotBeEmpty();
+        customer.Addresses.Should().ContainSingle();
+        customer.Addresses.First().Should().Be(address2);
+    }
+
+    private void SetAddressId(Address address, int id)
+    {
+        var idField = typeof(Address).GetField("<Id>k__BackingField",
+            System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+        if (idField == null)
+            throw new InvalidOperationException("Field 'Id' not found. Ensure the field name is correct.");
+
+        idField.SetValue(address, id);
     }
 
     [Theory(DisplayName = nameof(AddInvalidAddressShouldThrowException))]

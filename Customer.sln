@@ -8,6 +8,23 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Customer.Domain", "src\Cust
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Customer.UnitTests", "tests\Customer.UnitTests\Customer.UnitTests.csproj", "{70CA7B8B-644F-4983-A43B-10FEA0AE3E29}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Customer.Application", "src\Customer.Application\Customer.Application.csproj", "{0D3CEDD5-1DBD-4582-973C-EEDD13798C0F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Customer.Infra.Data.EF", "src\Customer.Infra.Data.EF\Customer.Infra.Data.EF.csproj", "{5D901DB4-AC23-4CA2-9CCA-F41DB16568F3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Customer.Api", "src\Customer.Api\Customer.Api.csproj", "{8362D60D-0D27-4230-970D-49AD2327419C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{084D19DC-B16C-4890-9F10-E8FA00AB02CA}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.yml = docker-compose.yml
+		Dockerfile = Dockerfile
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sql", "sql", "{428D3B8E-0DF1-4AB4-AB30-9925FA941603}"
+	ProjectSection(SolutionItems) = preProject
+		src\sql\init-db.sql = src\sql\init-db.sql
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -22,9 +39,25 @@ Global
 		{70CA7B8B-644F-4983-A43B-10FEA0AE3E29}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{70CA7B8B-644F-4983-A43B-10FEA0AE3E29}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{70CA7B8B-644F-4983-A43B-10FEA0AE3E29}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D3CEDD5-1DBD-4582-973C-EEDD13798C0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D3CEDD5-1DBD-4582-973C-EEDD13798C0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D3CEDD5-1DBD-4582-973C-EEDD13798C0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D3CEDD5-1DBD-4582-973C-EEDD13798C0F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D901DB4-AC23-4CA2-9CCA-F41DB16568F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D901DB4-AC23-4CA2-9CCA-F41DB16568F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D901DB4-AC23-4CA2-9CCA-F41DB16568F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D901DB4-AC23-4CA2-9CCA-F41DB16568F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8362D60D-0D27-4230-970D-49AD2327419C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8362D60D-0D27-4230-970D-49AD2327419C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8362D60D-0D27-4230-970D-49AD2327419C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8362D60D-0D27-4230-970D-49AD2327419C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{073885C8-4130-4F8D-8650-91C27EE5E379} = {4AA153E7-C927-4184-BD61-429C02BFBA76}
 		{70CA7B8B-644F-4983-A43B-10FEA0AE3E29} = {E597A9D2-097E-4974-B4B9-5D86B03CFF33}
+		{0D3CEDD5-1DBD-4582-973C-EEDD13798C0F} = {4AA153E7-C927-4184-BD61-429C02BFBA76}
+		{5D901DB4-AC23-4CA2-9CCA-F41DB16568F3} = {4AA153E7-C927-4184-BD61-429C02BFBA76}
+		{8362D60D-0D27-4230-970D-49AD2327419C} = {4AA153E7-C927-4184-BD61-429C02BFBA76}
+		{428D3B8E-0DF1-4AB4-AB30-9925FA941603} = {4AA153E7-C927-4184-BD61-429C02BFBA76}
 	EndGlobalSection
 EndGlobal

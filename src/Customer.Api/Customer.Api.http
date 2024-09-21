@@ -1,0 +1,215 @@
+@Customer.Api_HostAddress = http://localhost:5000
+
+### Teste de criação de cliente com dados válidos
+POST {{Customer.Api_HostAddress}}/api/customers
+Content-Type: application/json
+
+{
+  "name": "João da Silva",
+  "birthDate": "1985-05-15T00:00:00Z",
+  "genderType": 1,
+  "addresses": [
+    {
+      "street": "Rua das Flores",
+      "number": "123",
+      "complement": "Apto 45",
+      "neighborhood": "Jardim das Rosas",
+      "city": "São Paulo",
+      "state": "SP",
+      "zipCode": "01234-567"
+    },
+    {
+      "street": "Avenida Paulista",
+      "number": "456",
+      "complement": "",
+      "neighborhood": "Bela Vista",
+      "city": "São Paulo",
+      "state": "SP",
+      "zipCode": "01311-000"
+    }
+  ]
+}
+
+### Teste de criação de cliente com dados inválidos
+POST {{Customer.Api_HostAddress}}/api/customers
+Content-Type: application/json
+
+{
+  "name": "Maria da Silva",
+  "birthDate": "1985-05-15T00:00:00Z",
+  "genderType": 1,
+  "addresses": [
+    {
+      "street": "",
+      "number": "123",
+      "complement": "Apto 45",
+      "neighborhood": "Jardim das Rosas",
+      "city": "São Paulo",
+      "state": "SP",
+      "zipCode": "01234-567"
+    },
+    {
+      "street": "Avenida Paulista",
+      "number": "-456",
+      "complement": "",
+      "neighborhood": "Bela Vista",
+      "city": "São Paulo",
+      "state": "SP",
+      "zipCode": "01311"
+    }
+  ]
+}
+
+
+### Teste de criação de cliente sem nome
+POST {{Customer.Api_HostAddress}}/api/customers
+Content-Type: application/json
+
+{
+  "name": "",
+  "birthDate": "1985-05-15T00:00:00Z",
+  "genderType": 1,
+  "addresses": [
+    {
+      "street": "Rua das Flores",
+      "number": "123",
+      "complement": "Apto 45",
+      "neighborhood": "Jardim das Rosas",
+      "city": "São Paulo",
+      "state": "SP",
+      "zipCode": "01234-567"
+    }
+  ]
+}
+
+### Teste de criação de cliente com data de nascimento no futuro
+POST {{Customer.Api_HostAddress}}/api/customers
+Content-Type: application/json
+
+{
+  "name": "Maria Souza",
+  "birthDate": "2025-01-01T00:00:00Z",
+  "genderType": 1,
+  "addresses": [
+    {
+      "street": "Avenida Brasil",
+      "number": "456",
+      "complement": "",
+      "neighborhood": "Centro",
+      "city": "Rio de Janeiro",
+      "state": "RJ",
+      "zipCode": "12345-678"
+    }
+  ]
+}
+
+### Teste de criação de cliente sem endereço
+POST {{Customer.Api_HostAddress}}/api/customers
+Content-Type: application/json
+
+{
+  "name": "Carlos Pereira",
+  "birthDate": "1990-10-10T00:00:00Z",
+  "genderType": 1,
+  "addresses": []
+}
+
+### Teste de criação de cliente com gênero inválido
+POST {{Customer.Api_HostAddress}}/api/customers
+Content-Type: application/json
+
+{
+  "name": "Ana Lima",
+  "birthDate": "1992-03-20T00:00:00Z",
+  "genderType": 3,
+  "addresses": [
+    {
+      "street": "Rua das Palmeiras",
+      "number": "789",
+      "complement": "",
+      "neighborhood": "Vila Nova",
+      "city": "Belo Horizonte",
+      "state": "MG",
+      "zipCode": "45678-910"
+    }
+  ]
+}
+
+### Teste de atualização de cliente com dados válidos
+PUT {{Customer.Api_HostAddress}}/api/customers/723595da-1eb4-461d-966a-11889927c31f
+Content-Type: application/json
+
+{
+  "name": "Carlos Pereira 2",
+  "birthDate": "1985-05-13",
+  "genderType": 1
+}
+
+
+### Teste de atualização de cliente sem nome
+PUT {{Customer.Api_HostAddress}}/api/customers/e213b0a1-328a-4efe-bfce-1977d570d9aa
+Content-Type: application/json
+
+{
+  "name": "",
+  "addresses": [
+    {
+      "street": "Rua das Laranjeiras",
+      "number": "150",
+      "complement": "Bloco B",
+      "neighborhood": "Centro",
+      "city": "Curitiba",
+      "state": "PR",
+      "zipCode": "80310-150"
+    }
+  ]
+}
+
+### Teste de atualização de cliente com endereço inválido
+
+PUT {{Customer.Api_HostAddress}}/api/customers/e213b0a1-328a-4efe-bfce-1977d570d9aa
+Content-Type: application/json
+
+{
+  "name": "João da Silva",
+  "birthDate": "1985-05-13",
+  "genderType": 1,
+  "addresses": [
+    {
+      "street": "",
+      "number": "150",
+      "complement": "Bloco B",
+      "neighborhood": "Centro",
+      "city": "Curitiba",
+      "state": "PR",
+      "zipCode": "80310-150"
+    }
+  ]
+}
+
+### Adicionar endereços a um cliente
+POST {{Customer.Api_HostAddress}}/api/customers/723595da-1eb4-461d-966a-11889927c31f/addresses
+Content-Type: application/json
+
+{
+  "addressModelInputs": [
+    {
+      "street": "Rua das Palmeiras",
+      "number": "789",
+      "complement": "",
+      "neighborhood": "Vila Nova",
+      "city": "Belo Horizonte",
+      "state": "MG",
+      "zipCode": "45678-910"
+    },
+    {
+      "street": "Rua das Laranjeiras",
+      "number": "150",
+      "complement": "Bloco B",
+      "neighborhood": "Centro",
+      "city": "Curitiba",
+      "state": "PR",
+      "zipCode": "80310-150"
+    }
+  ]
+}

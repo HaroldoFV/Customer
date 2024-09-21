@@ -1,0 +1,46 @@
+﻿networks:
+  customer_network:
+    driver: bridge
+
+services:
+  customer.api:
+    image: customer.api
+    container_name: customer_api
+    build:
+      context: .
+      dockerfile: src/Customer.Api/Dockerfile
+    ports:
+      - "5000:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    depends_on:
+      - customer.db
+    networks:
+      - customer_network
+
+  customer.db:
+    build: .
+    container_name: customer_db
+    ports:
+      - "1433:1433"
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=ComplexPass123!
+      - MSSQL_PID=Express
+    volumes:
+      - ./src/sql:/docker-entrypoint-initdb.d
+      - sqlserver_data:/var/opt/mssql
+    networks:
+      - customer_network
+    restart: on-failure
+    command: >
+      /bin/bash -c "
+      /opt/mssql/bin/sqlservr --accept-eula &
+      pid=$!
+      sleep 30s && 
+      /opt/mssql-tools18/bin/sqlcmd -S localhost -U SA -P 'ComplexPass123!' -i /docker-entrypoint-initdb.d/init-db.sql -C;
+      wait $pid   
+      " 
+
+volumes:
+  sqlserver_data:

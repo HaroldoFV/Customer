@@ -1,9 +1,11 @@
 using System.Text.RegularExpressions;
 using Customer.Domain.Exception;
 using Customer.Domain.Validation;
+using Microsoft.EntityFrameworkCore;
 
 namespace Customer.Domain.ValueObject;
 
+[Owned]
 public class Address : SeedWork.ValueObject
 {
     private static readonly Regex ZipCodeRegex = new Regex(@"^\d{5}-\d{3}$", RegexOptions.Compiled);
@@ -28,6 +30,7 @@ public class Address : SeedWork.ValueObject
         Validate();
     }
 
+    public int Id { get; private set; }
     public string Street { get; private set; }
     public string Number { get; private set; }
     public string Complement { get; private set; }
@@ -35,7 +38,6 @@ public class Address : SeedWork.ValueObject
     public string City { get; private set; }
     public string State { get; private set; }
     public string ZipCode { get; private set; }
-
 
     private void Validate()
     {
@@ -55,10 +57,15 @@ public class Address : SeedWork.ValueObject
 
     public override bool Equals(SeedWork.ValueObject? other)
     {
-        return other is Address address && Street == address.Street &&
-               Number == address.Number && Complement == address.Complement &&
+        if (other is not Address address)
+            return false;
+
+        return Street == address.Street &&
+               Number == address.Number &&
+               Complement == address.Complement &&
                Neighborhood == address.Neighborhood &&
-               City == address.City && State == address.State &&
+               City == address.City &&
+               State == address.State &&
                ZipCode == address.ZipCode;
     }
 
