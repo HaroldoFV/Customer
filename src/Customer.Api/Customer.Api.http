@@ -110,7 +110,7 @@ Content-Type: application/json
 {
   "name": "Carlos Pereira",
   "birthDate": "1990-10-10T00:00:00Z",
-  "genderType": 1,
+  "genderType": 2,
   "addresses": []
 }
 

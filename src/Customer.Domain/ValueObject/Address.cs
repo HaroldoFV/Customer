@@ -53,6 +53,21 @@ public class Address : SeedWork.ValueObject
         {
             throw new EntityValidationException("Invalid ZipCode format.");
         }
+
+        ValidateNumber();
+    }
+
+    private void ValidateNumber()
+    {
+        if (!int.TryParse(Number, out int parsedNumber))
+        {
+            throw new EntityValidationException($"Invalid number format for {nameof(Number)}.");
+        }
+
+        if (parsedNumber <= 0)
+        {
+            throw new EntityValidationException($"{nameof(Number)} must be greater than zero.");
+        }
     }
 
     public override bool Equals(SeedWork.ValueObject? other)

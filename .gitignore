@@ -495,4 +495,7 @@ fabric.properties
 .idea/
 .run
 
+
+frontend/dist
+
 # End of https://www.toptal.com/developers/gitignore/api/rider,dotnetcore,csharp
