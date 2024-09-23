@@ -54,7 +54,7 @@ Para executar os testes de unidade, utilize o comando:
   dotnet test
 ```
 
-# Alternativa em caso de problemas ao rodar o SQL Server no Docker
+### Alternativa em caso de problemas ao rodar o SQL Server no Docker
 
 Caso não seja possível rodar o banco de dados **SQL Server** no Docker, é possível seguir os passos abaixo para rodar o banco de forma local:
 
@@ -89,7 +89,13 @@ Caso não seja possível rodar o banco de dados **SQL Server** no Docker, é pos
    #     "
    ```
    
-2 .Atualizar o arquivo appsettings.Development.json: No projeto da API, altere o valor da chave ConnectionStrings:DefaultConnection para apontar para o SQL Server local (localhost). Exemplo de alteração no arquivo appsettings.Development.json:
+2. Comente a dependência da api ao container de banco de dados no docker-compose.yml
+```
+    # depends_on:
+    #   - customer.db
+```
+   
+3. Atualizar o arquivo appsettings.Development.json: No projeto da API, altere o valor da chave ConnectionStrings:DefaultConnection para apontar para o SQL Server local (localhost). Exemplo de alteração no arquivo appsettings.Development.json:
     ```json
         {
         "ConnectionStrings": {
@@ -98,4 +104,5 @@ Caso não seja possível rodar o banco de dados **SQL Server** no Docker, é pos
         }
     ```
     
-3. Executar o script init-db.sql manualmente: O arquivo de inicialização do banco de dados (init-db.sql) pode ser encontrado no diretório src/sql. Você deve executá-lo manualmente no seu SQL Server local para criar o banco e suas tabelas.
+4. Executar o script init-db.sql manualmente:
+O arquivo de inicialização do banco de dados (init-db.sql) pode ser encontrado no diretório src/sql. Você deve executá-lo manualmente no seu SQL Server local para criar o banco e suas tabelas.
