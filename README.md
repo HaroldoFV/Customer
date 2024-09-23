@@ -33,7 +33,7 @@ A aplicação segue a **Arquitetura Limpa**, separando claramente as responsabil
     docker-compose up --build
     ```
 
-4. Após a inicialização dos containers, a aplicação(backend,frontend) estará acessível através do navegador 
+4. Após a inicialização dos containers, a aplicação(frontend, backend) estará acessível através do navegador 
 ou cliente de API no seguinte endereços respectivamente:
 
     ```
