@@ -52,3 +52,50 @@ Para executar os testes de unidade, utilize o comando:
 
 ```bash 
   dotnet test
+```
+
+# Alternativa em caso de problemas ao rodar o SQL Server no Docker
+
+Caso não seja possível rodar o banco de dados **SQL Server** no Docker, é possível seguir os passos abaixo para rodar o banco de forma local:
+
+1. **Comentar o container do SQL Server no `docker-compose.yml`**:
+   
+   Comente ou remova a seção `customer.db` no arquivo `docker-compose.yml` para evitar que o Docker tente criar o container do SQL Server.
+
+   Exemplo:
+   ```yaml
+   # customer.db:
+   #   image: mcr.microsoft.com/mssql/server:2019-latest
+   #   container_name: customer_db
+   #   ports:
+   #     - "1433:1433"
+   #   environment:
+   #     - ACCEPT_EULA=Y
+   #     - SA_PASSWORD=ComplexPass123!
+   #     - MSSQL_PID=Express
+   #   volumes:
+   #     - ./src/sql:/docker-entrypoint-initdb.d
+   #     - sqlserver_data:/var/opt/mssql
+   #   networks:
+   #     - customer_network
+   #   restart: on-failure
+   #   command: >
+   #     /bin/bash -c "
+   #     /opt/mssql/bin/sqlservr --accept-eula &
+   #     pid=$!
+   #     sleep 30s && 
+   #     /opt/mssql-tools18/bin/sqlcmd -S localhost -U SA -P 'ComplexPass123!' -i /docker-entrypoint-initdb.d/init-db.sql -C;
+   #     wait $pid   
+   #     "
+   ```
+   
+2 .Atualizar o arquivo appsettings.Development.json: No projeto da API, altere o valor da chave ConnectionStrings:DefaultConnection para apontar para o SQL Server local (localhost). Exemplo de alteração no arquivo appsettings.Development.json:
+    ```json
+        {
+        "ConnectionStrings": {
+        "DefaultConnection": "Server=localhost;Database=CustomerDb;User Id=sa;Password=ComplexPass123!"
+        }
+        }
+    ```
+    
+3. Executar o script init-db.sql manualmente: O arquivo de inicialização do banco de dados (init-db.sql) pode ser encontrado no diretório src/sql. Você deve executá-lo manualmente no seu SQL Server local para criar o banco e suas tabelas.
