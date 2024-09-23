@@ -1,0 +1,133 @@
+/* Layout principal */
+.customer-list-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Estilo de cada item de cliente */
+.list-group-item {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  margin-bottom: 20px;
+}
+
+.list-group-item:hover {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.customer-header {
+  margin-bottom: 10px;
+}
+
+.customer-name {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #343a40;
+}
+
+.toggle-details {
+  font-size: 0.875rem;
+  color: #007bff;
+  cursor: pointer;
+}
+
+.toggle-details:hover {
+  text-decoration: underline;
+}
+
+/* Styling para os ícones de ação */
+.action-icons i {
+  font-size: 1.25rem;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.action-icons i:hover {
+  color: #0056b3;
+}
+
+/* Estilo para a seção de detalhes */
+.customer-details {
+  padding: 10px;
+  background-color: #f9f9f9;
+  border-radius: 4px;
+  margin-top: 10px;
+}
+
+.detail-section {
+  margin-bottom: 15px;
+}
+
+.address-section {
+  margin-top: 15px;
+}
+
+.customer-table {
+  margin-top: 10px;
+  width: 100%;
+  font-size: 0.875rem;
+  border: 1px solid #dee2e6;
+}
+
+.customer-table th,
+.customer-table td {
+  padding: 12px;
+  text-align: left;
+}
+
+.customer-table th {
+  background-color: #f8f9fa;
+}
+
+.toggle-addresses {
+  font-size: 0.875rem;
+  color: #007bff;
+  cursor: pointer;
+}
+
+.toggle-addresses:hover {
+  text-decoration: underline;
+}
+
+/* Estilo da paginação */
+.pagination {
+  margin-top: 30px;
+}
+
+.page-link {
+  color: #007bff;
+}
+
+.page-link:hover {
+  color: #0056b3;
+}
+
+
+/* Estilo para o alerta de sucesso */
+.alert-success-custom {
+  background-color: #e6f7e6; /* Verde claro */
+  color: #2e7d32; /* Verde escuro */
+  border: 1px solid #a5d6a7; /* Borda verde */
+  padding: 15px;
+  border-radius: 8px; /* Bordas arredondadas */
+  font-size: 14px;
+  margin-top: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra leve */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Estilo para o botão de fechar */
+.alert-success-custom .close-btn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #2e7d32;
+  cursor: pointer;
+}

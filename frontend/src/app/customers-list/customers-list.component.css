@@ -1,0 +1,39 @@
+i {
+  cursor: pointer;
+}
+
+/* Estilo para centralizar a mensagem de erro */
+.error-message {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #f44336; /* Cor de fundo vermelha para erro */
+  color: #fff; /* Cor do texto branca */
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para destacar */
+  z-index: 1000; /* Garantir que esteja acima de outros elementos */
+  text-align: center;
+}
+
+/* Outras regras de estilo */
+.no-data-message {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.list-group-item {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.list-group-item .d-flex {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pagination {
+  margin-top: 20px;
+}

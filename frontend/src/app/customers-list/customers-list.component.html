@@ -1,0 +1,175 @@
+<div *ngIf="customers.length === 0" class="no-data-message">
+  <p>No data available. Please check back later.</p>
+</div>
+
+<div *ngIf="errorMessage" class="error-message">
+  {{ errorMessage }}
+</div>
+
+<div *ngIf="customers.length > 0" class="customer-list-wrapper">
+  <div class="list-group">
+    <div *ngFor="let customer of customers" class="list-group-item">
+      <div class="d-flex w-100 justify-content-between align-items-center customer-header">
+        <div>
+          <h4 class="mb-3 d-inline-block customer-name">{{ customer.name }}</h4>
+          <small (click)="toggleDetailsExpansion(customer.id)" class="text-primary toggle-details">
+            {{ expandedDetails[customer.id!] ? "Ver menos" : "Ver mais" }}
+          </small>
+        </div>
+
+        <div class="action-icons">
+          <i title="Edit" class="fas fa-edit text-primary mx-2" (click)="editCustomer(customer)" aria-hidden="true"></i>
+          <i title="Delete" class="fas fa-trash-alt text-danger" (click)="deleteCustomer(customer.id!)"
+            aria-hidden="true"></i>
+        </div>
+      </div>
+
+      <div *ngIf="expandedDetails[customer.id!]" class="customer-details">
+        <div class="detail-section">
+          <p class="mb-1">
+            <strong>Birth Date:</strong> {{ customer.birthDate | date }}<br />
+            <strong>Gender:</strong>
+            {{
+            customer.genderType === 1
+            ? "Male"
+            : customer.genderType === 2
+            ? "Female"
+            : "Other"
+            }}<br />
+          </p>
+        </div>
+
+        <div class="address-section">
+          <h6><b>Addresses:</b></h6>
+
+          <table class="table table-bordered table-hover customer-table">
+            <thead>
+              <tr>
+                <th>Street</th>
+                <th>Number</th>
+                <th>Complement</th>
+                <th>Neighborhood</th>
+                <th>City</th>
+                <th>State</th>
+                <th>Zip Code</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Edit Address -->
+              <tr *ngFor="let address of customer.addresses; let i = index"
+                [hidden]="i > 0 && !expandedAddresses[customer.id!]">
+                <td *ngIf="!isEditingAddress[customer.id + '-' + i]">{{ address.street }}</td>
+                <td *ngIf="isEditingAddress[customer.id + '-' + i]">
+                  <input type="text" [(ngModel)]="address.street" class="form-control" required #street="ngModel" />
+                </td>
+
+                <td *ngIf="!isEditingAddress[customer.id + '-' + i]">{{ address.number }}</td>
+                <td *ngIf="isEditingAddress[customer.id + '-' + i]">
+                  <input type="number" [(ngModel)]="address.number" (ngModelChange)="address.number = '' + $event"
+                    class="form-control" required #number="ngModel" />
+                </td>
+
+                <td *ngIf="!isEditingAddress[customer.id + '-' + i]">{{ address.complement }}</td>
+                <td *ngIf="isEditingAddress[customer.id + '-' + i]">
+                  <input type="text" [(ngModel)]="address.complement" class="form-control" #complement="ngModel" />
+                </td>
+
+                <td *ngIf="!isEditingAddress[customer.id + '-' + i]">{{ address.neighborhood }}</td>
+                <td *ngIf="isEditingAddress[customer.id + '-' + i]">
+                  <input type="text" [(ngModel)]="address.neighborhood" class="form-control" required
+                    #neighborhood="ngModel" />
+                </td>
+
+                <td *ngIf="!isEditingAddress[customer.id + '-' + i]">{{ address.city }}</td>
+                <td *ngIf="isEditingAddress[customer.id + '-' + i]">
+                  <input type="text" [(ngModel)]="address.city" class="form-control" required #city="ngModel" />
+                </td>
+
+                <td *ngIf="!isEditingAddress[customer.id + '-' + i]">{{ address.state }}</td>
+                <td *ngIf="isEditingAddress[customer.id + '-' + i]">
+                  <input type="text" [(ngModel)]="address.state" class="form-control" required #state="ngModel" />
+                </td>
+
+                <td *ngIf="!isEditingAddress[customer.id + '-' + i]">{{ address.zipCode }}</td>
+                <td *ngIf="isEditingAddress[customer.id + '-' + i]">
+                  <input type="text" [(ngModel)]="address.zipCode" class="form-control" required #zipCode="ngModel" />
+                </td>
+
+                <td>
+                  <button class="btn btn-sm"
+                    [ngClass]="isEditingAddress[customer.id + '-' + i] ? 'btn-success' : 'btn-primary'"
+                    (click)="toggleEditAddress(customer.id!, i)"
+                    [disabled]="isEditingAddress[customer.id + '-' + i] && !isAddressValid(address)">
+                    {{ isEditingAddress[customer.id + '-' + i] ? 'Save' : 'Edit' }}
+                  </button>
+
+                  <button class="btn btn-sm btn-danger" (click)="deleteAddress(customer.id!, address)">Delete</button>
+                </td>
+              </tr>
+
+              <!-- Novo endereço -->
+              <tr *ngIf="isAddingNewAddress[customer.id!]">
+                <td><input type="text" [(ngModel)]="newAddress.street" class="form-control" required /></td>
+                <td><input type="number" [(ngModel)]="newAddress.number"
+                    (ngModelChange)="newAddress.number = '' + $event" class="form-control" required /></td>
+                <td><input type="text" [(ngModel)]="newAddress.complement" class="form-control" /></td>
+                <td><input type="text" [(ngModel)]="newAddress.neighborhood" class="form-control" required /></td>
+                <td><input type="text" [(ngModel)]="newAddress.city" class="form-control" required /></td>
+                <td><input type="text" [(ngModel)]="newAddress.state" class="form-control" required /></td>
+                <td><input type="text" [(ngModel)]="newAddress.zipCode" class="form-control" required /></td>
+                <td>
+                  <button class="btn btn-sm btn-success" (click)="saveNewAddress(customer.id!)"
+                    [disabled]="!newAddress.street || !newAddress.number || !newAddress.city || !newAddress.state || !newAddress.zipCode">
+                    Save
+                  </button>
+                  <button class="btn btn-sm btn-danger" (click)="cancelNewAddress(customer.id!)">Cancel</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- Botão Ver mais/menos de endereços -->
+          <a *ngIf="customer.addresses.length > 1" href="javascript:void(0)"
+            (click)="toggleAddressExpansion(customer.id)" class="text-primary toggle-addresses">
+            {{ expandedAddresses[customer.id!] ? 'Ver menos' : 'Ver mais' }}
+          </a>
+          <br>
+          <!-- Botão para adicionar novo endereço -->
+          <button class="btn btn-sm btn-primary mt-2" (click)="addNewAddress(customer.id!)"
+            *ngIf="!isAddingNewAddress[customer.id!]">
+            Add Address
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <nav aria-label="Page navigation" *ngIf="totalCustomers > perPage">
+    <ul class="pagination justify-content-center">
+      <li class="page-item" [class.disabled]="currentPage === 1">
+        <a class="page-link" (click)="previousPage()" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+      <li class="page-item" [class.active]="index + 1 === currentPage"
+        *ngFor="let i of [].constructor(totalPages()); let index = index">
+        <a class="page-link" [class.disabled]="index + 1 === currentPage" (click)="
+            index + 1 !== currentPage ? loadCustomers(index + 1, $event) : null
+          ">
+          {{ index + 1 }}
+        </a>
+      </li>
+      <li class="page-item" [class.disabled]="currentPage === totalPages()">
+        <a class="page-link" (click)="nextPage()" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>
+
+
+<div *ngIf="successMessage" class="alert alert-success-custom" role="alert">
+  {{ successMessage }}
+</div>

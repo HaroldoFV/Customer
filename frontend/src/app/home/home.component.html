@@ -1,0 +1,42 @@
+<header class="header clearfix">
+  <div class="logo-title">
+    <img src="assets/user.png" alt="Blog Logo" class="logo" />
+    <h3 class="text-muted">Customer App</h3>
+  </div>
+  <nav>
+    <ul class="nav nav-pills float-right">
+      <li class="nav-item">
+        <button type="button" class="btn btn-primary">
+          <i class="fas fa-home"></i> Home
+        </button>
+      </li>
+      <li class="nav-item">
+        <button #addCustomer type="button" class="btn btn-link" (click)="onAddCustomerClick()" data-toggle="modal" data-target="#exampleModal">
+          <i class="fas fa-home"></i> Add
+        </button>
+      </li>
+    </ul>
+  </nav>
+</header>
+
+<main role="main">
+  <div class="content-wrapper">
+    <div class="chat-menu">
+      <ul class="chat-icons">
+        <li><i class="fas fa-comments"></i></li>
+        <li><i class="fas fa-user-friends"></i></li>
+        <li><i class="fas fa-cog"></i></li>
+        <li><i class="fas fa-blog"></i></li>
+        <li><i class="fas fa-envelope"></i></li>
+      </ul>
+    </div>
+    <div class="main-content">
+      <app-customers-list></app-customers-list>
+      <app-customer-form></app-customer-form>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <p>&copy; Customer 2024</p>
+</footer>

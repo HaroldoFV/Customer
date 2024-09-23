@@ -1,0 +1,155 @@
+<div *ngIf="successMessage" class="alert alert-success-custom" role="alert">
+  {{ successMessage }}
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title" id="exampleModalLabel">Customer</h5>
+        <button type="button" #closeBtn class="close text-white" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="errorMessage" class="alert alert-danger">
+          {{ errorMessage }}
+        </div>
+
+
+        <form #customerForm="ngForm">
+
+          <div class="form-group">
+            <label for="customerName">Name</label>
+            <input name="name" type="text" [(ngModel)]="customer.name" class="form-control" id="customerName"
+              placeholder="Enter customer name" required #name="ngModel" />
+            <div *ngIf="name.invalid && name.touched" class="text-danger">
+              Name is required.
+            </div>
+          </div>
+
+
+          <div class="form-group">
+            <label for="customerBirthDate">Birth Date</label>
+            <input name="birthDate" type="date" [(ngModel)]="customer.birthDate" class="form-control"
+              id="customerBirthDate" required #birthDate="ngModel" />
+            <div *ngIf="birthDate.invalid && birthDate.touched" class="text-danger">
+              Birth Date is required.
+            </div>
+          </div>
+
+
+          <div class="form-group">
+            <label for="customerGender">Gender</label>
+            <select name="genderType" [(ngModel)]="customer.genderType" (ngModelChange)="customer.genderType = +$event"
+              class="form-control" id="customerGender" required #genderType="ngModel">
+              <option [value]="null" disabled>Select gender</option>
+              <option [value]="1">Male</option>
+              <option [value]="2">Female</option>
+            </select>
+            <div *ngIf="genderType.invalid && genderType.touched" class="text-danger">
+              Gender is required.
+            </div>
+          </div>
+
+
+          <div *ngIf="!isEditMode">
+            <div *ngFor="let address of customer.addresses; let i = index"
+              class="address-group border p-3 mb-3 rounded">
+              <h6 class="d-flex justify-content-between align-items-center">
+                Address {{ i + 1 }}
+                <button *ngIf="customer.addresses.length > 1" type="button" class="btn btn-danger btn-sm"
+                  (click)="removeAddress(i)">
+                  Remove
+                </button>
+              </h6>
+
+              <div class="row">
+
+                <div class="form-group col-md-6">
+                  <label for="street{{ i }}">Street</label>
+                  <input name="street" type="text" [(ngModel)]="address.street" class="form-control" id="street{{ i }}"
+                    placeholder="Enter street" required #street="ngModel" />
+                  <div *ngIf="street.invalid && street.touched" class="text-danger">
+                    Street is required.
+                  </div>
+                </div>
+
+                <div class="form-group col-md-3">
+                  <label for="number{{ i }}">Number</label>
+                  <input name="number" type="number" [(ngModel)]="address.number"
+                    (ngModelChange)="address.number = '' + $event" class="form-control" id="number{{ i }}"
+                    placeholder="Enter number" required #number="ngModel" />
+                  <div *ngIf="number.invalid && number.touched" class="text-danger">
+                    Number is required.
+                  </div>
+                </div>
+
+
+                <div class="form-group col-md-3">
+                  <label for="complement{{ i }}">Complement</label>
+                  <input name="complement" type="text" [(ngModel)]="address.complement" class="form-control"
+                    id="complement{{ i }}" placeholder="Enter complement" />
+                </div>
+              </div>
+
+              <div class="row">
+
+                <div class="form-group col-md-4">
+                  <label for="neighborhood{{ i }}">Neighborhood</label>
+                  <input name="neighborhood" type="text" [(ngModel)]="address.neighborhood" class="form-control"
+                    id="neighborhood{{ i }}" placeholder="Enter neighborhood" required #neighborhood="ngModel" />
+                  <div *ngIf="neighborhood.invalid && neighborhood.touched" class="text-danger">
+                    Neighborhood is required.
+                  </div>
+                </div>
+
+
+                <div class="form-group col-md-4">
+                  <label for="city{{ i }}">City</label>
+                  <input name="city" type="text" [(ngModel)]="address.city" class="form-control" id="city{{ i }}"
+                    placeholder="Enter city" required #city="ngModel" />
+                  <div *ngIf="city.invalid && city.touched" class="text-danger">
+                    City is required.
+                  </div>
+                </div>
+
+
+                <div class="form-group col-md-2">
+                  <label for="state{{ i }}">State</label>
+                  <input name="state" type="text" [(ngModel)]="address.state" class="form-control" id="state{{ i }}"
+                    placeholder="Enter state" required #state="ngModel" />
+                  <div *ngIf="state.invalid && state.touched" class="text-danger">
+                    State is required.
+                  </div>
+                </div>
+
+
+                <div class="form-group col-md-2">
+                  <label for="zipCode{{ i }}">Zip Code</label>
+                  <input name="zipCode" type="text" [(ngModel)]="address.zipCode" class="form-control"
+                    id="zipCode{{ i }}" placeholder="Enter zip code" required #zipCode="ngModel" />
+                  <div *ngIf="zipCode.invalid && zipCode.touched" class="text-danger">
+                    ZipCode is required.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <button type="button" class="btn btn-secondary mb-3" (click)="addAddresses()">
+              Add Address
+            </button>
+          </div>
+
+
+          <button (click)="addCustomer()" type="button" class="btn btn-primary float-right"
+            [disabled]="customerForm.invalid">
+            Save
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
